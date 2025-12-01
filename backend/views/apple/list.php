@@ -20,5 +20,4 @@ $this->title = 'My Yii Application';
         'itemView' => 'apple'
 	]); ?>
 
-   </ul>
 </div>
