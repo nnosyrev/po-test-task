@@ -2,7 +2,9 @@
 
 namespace backend\controllers;
 
+use common\models\Apple;
 use Yii;
+use yii\data\ArrayDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 
@@ -21,7 +23,7 @@ class AppleController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['index'],
+                        'actions' => ['list', 'create'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -43,13 +45,42 @@ class AppleController extends Controller
     }
 
     /**
-     * Displays homepage.
+     * Displays apples.
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionList()
     {
-        echo 'Тут будет список яблок...'; exit;
-        return $this->render('index');
+        $apples = Apple::find()
+            ->where(['status' => 'hanging'])
+            ->all();
+
+        return $this->render('list', [
+            'apples' => $apples,
+            'dataProvider' => new ArrayDataProvider(['allModels' => $apples])
+        ]);
+    }
+
+    /**
+     * Create apples.
+     *
+     * @return string
+     */
+    public function actionCreate()
+    {
+        $count = mt_rand(5, 10);
+
+        for ($i = 0; $i < $count; $i++) {
+            $apple = new Apple();
+            $apple->color = 'red';
+            $apple->size = 5;
+            $apple->percent = 25;
+            $apple->status = 'hanging';
+
+            $apple->save();
+        }
+
+        echo 'create...'; exit;
+        return $this->render('list');
     }
 }
