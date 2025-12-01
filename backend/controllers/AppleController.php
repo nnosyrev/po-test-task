@@ -23,7 +23,7 @@ class AppleController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['list', 'create'],
+                        'actions' => ['list', 'create', 'fall'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -52,7 +52,7 @@ class AppleController extends Controller
     public function actionList()
     {
         $apples = Apple::find()
-            ->where(['status' => 'hanging'])
+            //->where(['status' => 'hanging'])
             ->all();
 
         return $this->render('list', [
@@ -82,5 +82,24 @@ class AppleController extends Controller
 
         echo 'create...'; exit;
         return $this->render('list');
+    }
+
+    /**
+     * Create apples.
+     *
+     * @return string
+     */
+    public function actionFall()
+    {
+        $id = Yii::$app->request->post('Apple')['id'];
+
+        $apple = Apple::findOneOrFail($id);
+        $apple->status = Apple::STATUS_FALLEN;
+
+        if ($apple->save()) {
+            return $this->redirect(['apple/list']);
+        }
+
+        throw new \Exception('Something went wrong.');
     }
 }

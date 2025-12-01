@@ -4,6 +4,7 @@ namespace common\models;
 
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\web\NotFoundHttpException;
 
 /**
  * Apple model
@@ -61,6 +62,17 @@ class Apple extends ActiveRecord
     public static function findByUsername($username)
     {
         //return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+    }
+
+    public static function findOneOrFail($condition): self
+    {
+        $apple = Apple::findOne($condition);
+
+        if (!$apple) {
+            throw new NotFoundHttpException('The apple does not exist.');
+        }
+
+        return $apple;
     }
 
     /**

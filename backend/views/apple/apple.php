@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 ?>
@@ -13,7 +14,7 @@ use yii\widgets\ActiveForm;
 
    <?php $form = ActiveForm::begin([
        'id' => 'fall-form',
-       //'options' => ['class' => 'form-horizontal'],
+       'action' => Url::to(['apple/fall']),
    ]) ?>
        <?= $form->field($model, 'id')->hiddenInput()->label(false) ?>
 
