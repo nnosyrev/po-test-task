@@ -2,8 +2,6 @@
 
 namespace common\models;
 
-use Yii;
-use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
@@ -20,9 +18,9 @@ use yii\db\ActiveRecord;
  */
 class Apple extends ActiveRecord
 {
-    public const STATUS_DELETED = 0;
-    public const STATUS_INACTIVE = 9;
-    public const STATUS_ACTIVE = 10;
+    public const STATUS_HANGING = 'hanging';
+    public const STATUS_FALLEN = 'fallen';
+    public const STATUS_ROTTEN = 'rotten';
 
 
     /**
@@ -49,8 +47,8 @@ class Apple extends ActiveRecord
     public function rules()
     {
         return [
-            //['status', 'default', 'value' => self::STATUS_INACTIVE],
-            //['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+            ['status', 'default', 'value' => self::STATUS_HANGING],
+            ['status', 'in', 'range' => [self::STATUS_HANGING, self::STATUS_FALLEN, self::STATUS_ROTTEN]],
         ];
     }
 
@@ -62,7 +60,7 @@ class Apple extends ActiveRecord
      */
     public static function findByUsername($username)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        //return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
     }
 
     /**
