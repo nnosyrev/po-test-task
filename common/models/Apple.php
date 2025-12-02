@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\enums\AppleColor;
+use yii\behaviors\AttributeTypecastBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\NotFoundHttpException;
@@ -40,6 +41,12 @@ class Apple extends ActiveRecord
         return [
             TimestampBehavior::class,
         ];
+    }
+
+    public function afterFind()
+    {
+        parent::afterFind();
+        $this->color = AppleColor::from($this->color);
     }
 
     /**

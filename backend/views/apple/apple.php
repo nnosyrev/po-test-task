@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 
 <div class="user">
    <?= $model->id ?>
-   <?= Html::encode($model->color) ?>
+   <?= Html::encode($model->color->value) ?>
    <?= Html::encode($model->size) ?>
    <?= Html::encode($model->status) ?>
 
