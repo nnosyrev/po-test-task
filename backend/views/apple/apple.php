@@ -28,7 +28,7 @@ use yii\widgets\ActiveForm;
    ]) ?>
        <?= $form->field($model, 'id')->hiddenInput()->label(false) ?>
 
-       <?= Html::dropDownList('percent', null, ['0.25' => '0.25', '0.5' => '0.5', '0.75' => '0.75', '1' => '1']) ?>
+       <?= Html::dropDownList('percent', null, ['25' => '25', '50' => '50', '75' => '75', '100' => '100']) ?>
 
        <?= Html::submitButton('Съесть процент') ?>
    <?php ActiveForm::end() ?>

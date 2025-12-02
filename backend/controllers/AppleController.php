@@ -8,6 +8,7 @@ use Yii;
 use yii\data\ArrayDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\Response;
 
 /**
  * Apple controller
@@ -52,9 +53,7 @@ class AppleController extends Controller
      */
     public function actionList()
     {
-        $apples = Apple::find()
-            //->where(['status' => 'hanging'])
-            ->all();
+        $apples = Apple::findAllNotRotten();
 
         return $this->render('list', [
             'apples' => $apples,
@@ -65,60 +64,44 @@ class AppleController extends Controller
     /**
      * Create apples.
      *
-     * @return string
+     * @return Response
      */
     public function actionCreate()
     {
         $count = mt_rand(5, 10);
 
         for ($i = 0; $i < $count; $i++) {
-            $apple = new Apple();
-            $apple->color = AppleColor::random();
-            $apple->size = '1.00';
-            $apple->status = Apple::STATUS_HANGING;
-
-            $apple->save();
+            Apple::create(AppleColor::random());
         }
 
-        echo 'create...'; exit;
-        return $this->render('list');
+        return $this->redirect(['apple/list']);
     }
 
     /**
      * Drope an apple
      *
-     * @return string
+     * @return Response
      */
     public function actionDrop(int $id)
     {
         $apple = Apple::findOneOrFail($id);
-        $apple->status = Apple::STATUS_DROPPED;
-        $apple->fall_at = time();
 
-        if ($apple->save()) {
-            return $this->redirect(['apple/list']);
-        }
+        $apple->drop();
 
-        throw new \Exception('Something went wrong.');
+        return $this->redirect(['apple/list']);
     }
 
     /**
      * Eat an apple.
      *
-     * @return string
+     * @return Response
      */
     public function actionEat(int $id)
     {
         $apple = Apple::findOneOrFail($id);
 
-        $percent = Yii::$app->request->post('percent');
+        $apple->eat(Yii::$app->request->post('percent'));
 
-        $apple->size = $apple->size - (float) $percent;
-
-        if ($apple->save()) {
-            return $this->redirect(['apple/list']);
-        }
-
-        throw new \Exception('Something went wrong.');
+        return $this->redirect(['apple/list']);
     }
 }

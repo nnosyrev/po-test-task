@@ -60,17 +60,6 @@ class Apple extends ActiveRecord
         ];
     }
 
-    /**
-     * Finds user by username
-     *
-     * @param string $username
-     * @return static|null
-     */
-    public static function findByUsername($username)
-    {
-        //return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
-    }
-
     public static function findOneOrFail($condition): self
     {
         $apple = Apple::findOne($condition);
@@ -88,5 +77,50 @@ class Apple extends ActiveRecord
     public function getId()
     {
         return $this->getPrimaryKey();
+    }
+
+    public static function create(AppleColor $appleColor): self
+    {
+        $apple = new Apple();
+        $apple->color = $appleColor;
+        $apple->size = '1.00';
+        $apple->status = Apple::STATUS_HANGING;
+        $apple->save();
+
+        return $apple;
+    }
+
+    public static function findAllNotRotten(): array
+    {
+        return Apple::find()
+            //->where(['status' => 'hanging'])
+            ->all();
+    }
+
+    public function drop(): void
+    {
+        if ($this->status === Apple::STATUS_DROPPED) {
+            throw new \Exception('The apple is already on the ground');
+        }
+
+        $this->status = Apple::STATUS_DROPPED;
+        $this->fall_at = time();
+
+        if (!$this->save()) {
+            throw new \Exception('Error when an apple falls');
+        }
+    }
+
+    public function eat(int $percent): void
+    {
+        if ($this->status === Apple::STATUS_HANGING) {
+            throw new \Exception('Trying to eat a hanging apple');
+        }
+
+        $this->size = $this->size - 1 / 100 * $percent;
+
+        if (!$this->save()) {
+            throw new \Exception('Error when trying to take a bite of an apple');
+        }
     }
 }
