@@ -18,7 +18,7 @@ while ($current <= $size) {
 ?>
 
 <div class="user">
-    <?= $model->id ?>
+    Apple #<?= $model->id ?>
     <?= Html::encode($model->color->value) ?>
     <?= Html::encode($model->size) ?>
     <?= Html::encode($model->status) ?>
@@ -53,4 +53,5 @@ while ($current <= $size) {
 
     <?php endif; ?>
 </div>
+<br>
 <br>

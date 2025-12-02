@@ -79,10 +79,13 @@ class Apple extends ActiveRecord
 
     public static function create(AppleColor $appleColor): self
     {
+        $now = time();
+
         $apple = new Apple();
         $apple->color = $appleColor;
         $apple->size = '1.00';
         $apple->status = Apple::STATUS_HANGING;
+        $apple->appearance_at = mt_rand($now - \Yii::$app->params['appleAppearancePeriod'], $now);
         $apple->save();
 
         return $apple;

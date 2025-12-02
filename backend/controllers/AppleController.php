@@ -102,6 +102,8 @@ class AppleController extends Controller
 
         $apple->eat(Yii::$app->request->post('percent'));
 
+        //Yii::$app->session->setFlash('error', "Data2 failed!");
+
         return $this->redirect(['apple/list']);
     }
 }
