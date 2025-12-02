@@ -21,8 +21,6 @@ class Apple extends ActiveRecord
 {
     public const STATUS_HANGING = 'hanging';
     public const STATUS_DROPPED = 'dropped';
-    public const STATUS_ROTTEN = 'rotten';
-
 
     /**
      * {@inheritdoc}
@@ -55,7 +53,7 @@ class Apple extends ActiveRecord
     {
         return [
             ['status', 'default', 'value' => self::STATUS_HANGING],
-            ['status', 'in', 'range' => [self::STATUS_HANGING, self::STATUS_DROPPED, self::STATUS_ROTTEN]],
+            ['status', 'in', 'range' => [self::STATUS_HANGING, self::STATUS_DROPPED]],
             ['color', 'in', 'range' => AppleColor::cases()],
         ];
     }
@@ -93,7 +91,8 @@ class Apple extends ActiveRecord
     public static function findAllNotRotten(): array
     {
         return Apple::find()
-            //->where(['status' => 'hanging'])
+            ->where('fall_at IS NULL')
+            ->orWhere('fall_at >= :threshold', ['threshold' => time() - \Yii::$app->params['appleRotsInSeconds']])
             ->all();
     }
 
@@ -115,6 +114,10 @@ class Apple extends ActiveRecord
             throw new \Exception('Trying to eat a hanging apple');
         }
 
+        if ($this->isRotten()) {
+            throw new \Exception('The apple is rotten');
+        }
+
         $this->size = $this->size - 1 / 100 * $percent;
 
         if ($this->size < 0) {
@@ -127,5 +130,14 @@ class Apple extends ActiveRecord
         }
 
         $this->save();
+    }
+
+    public function isRotten(): bool
+    {
+        if ($this->status === Apple::STATUS_HANGING) {
+            return false;
+        }
+
+        return (time() - $this->fall_at > \Yii::$app->params['appleRotsInSeconds']);
     }
 }
