@@ -24,7 +24,7 @@ class AppleController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['list', 'create', 'fall', 'eat'],
+                        'actions' => ['list', 'create', 'drop', 'eat'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -85,16 +85,16 @@ class AppleController extends Controller
     }
 
     /**
-     * Create apples.
+     * Drope an apple
      *
      * @return string
      */
-    public function actionFall()
+    public function actionDrop()
     {
         $id = Yii::$app->request->post('Apple')['id'];
 
         $apple = Apple::findOneOrFail($id);
-        $apple->status = Apple::STATUS_FALLEN;
+        $apple->status = Apple::STATUS_DROPPED;
         $apple->fall_at = time();
 
         if ($apple->save()) {
@@ -105,7 +105,7 @@ class AppleController extends Controller
     }
 
     /**
-     * Eat a apple.
+     * Eat an apple.
      *
      * @return string
      */

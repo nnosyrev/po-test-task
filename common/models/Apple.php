@@ -20,7 +20,7 @@ use yii\web\NotFoundHttpException;
 class Apple extends ActiveRecord
 {
     public const STATUS_HANGING = 'hanging';
-    public const STATUS_FALLEN = 'fallen';
+    public const STATUS_DROPPED = 'dropped';
     public const STATUS_ROTTEN = 'rotten';
 
 
@@ -55,7 +55,7 @@ class Apple extends ActiveRecord
     {
         return [
             ['status', 'default', 'value' => self::STATUS_HANGING],
-            ['status', 'in', 'range' => [self::STATUS_HANGING, self::STATUS_FALLEN, self::STATUS_ROTTEN]],
+            ['status', 'in', 'range' => [self::STATUS_HANGING, self::STATUS_DROPPED, self::STATUS_ROTTEN]],
             ['color', 'in', 'range' => AppleColor::cases()],
         ];
     }
