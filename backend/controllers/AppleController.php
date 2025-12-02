@@ -24,7 +24,7 @@ class AppleController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['list', 'create', 'fall'],
+                        'actions' => ['list', 'create', 'fall', 'eat'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -96,6 +96,26 @@ class AppleController extends Controller
         $apple = Apple::findOneOrFail($id);
         $apple->status = Apple::STATUS_FALLEN;
         $apple->fall_at = time();
+
+        if ($apple->save()) {
+            return $this->redirect(['apple/list']);
+        }
+
+        throw new \Exception('Something went wrong.');
+    }
+
+    /**
+     * Eat a apple.
+     *
+     * @return string
+     */
+    public function actionEat(int $id)
+    {
+        $apple = Apple::findOneOrFail($id);
+
+        $percent = Yii::$app->request->post('percent');
+
+        $apple->size = $apple->size - (float) $percent;
 
         if ($apple->save()) {
             return $this->redirect(['apple/list']);

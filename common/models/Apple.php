@@ -3,7 +3,6 @@
 namespace common\models;
 
 use common\enums\AppleColor;
-use yii\behaviors\AttributeTypecastBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\NotFoundHttpException;
@@ -12,7 +11,7 @@ use yii\web\NotFoundHttpException;
  * Apple model
  *
  * @property int $id
- * @property string $color
+ * @property AppleColor|string $color
  * @property int $size
  * @property string $status
  * @property int $created_at
