@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\enums\AppleColor;
 use common\models\Apple;
 use Yii;
 use yii\data\ArrayDataProvider;
@@ -72,7 +73,7 @@ class AppleController extends Controller
 
         for ($i = 0; $i < $count; $i++) {
             $apple = new Apple();
-            $apple->color = 'red';
+            $apple->color = AppleColor::random();
             $apple->size = '1.00';
             $apple->status = Apple::STATUS_HANGING;
 

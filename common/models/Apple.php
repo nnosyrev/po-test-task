@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\enums\AppleColor;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\NotFoundHttpException;
@@ -12,7 +13,6 @@ use yii\web\NotFoundHttpException;
  * @property int $id
  * @property string $color
  * @property int $size
- * @property int $percent
  * @property string $status
  * @property int $created_at
  * @property int $fall_at
@@ -50,6 +50,7 @@ class Apple extends ActiveRecord
         return [
             ['status', 'default', 'value' => self::STATUS_HANGING],
             ['status', 'in', 'range' => [self::STATUS_HANGING, self::STATUS_FALLEN, self::STATUS_ROTTEN]],
+            ['color', 'in', 'range' => AppleColor::cases()],
         ];
     }
 
