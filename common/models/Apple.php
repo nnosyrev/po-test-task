@@ -106,9 +106,7 @@ class Apple extends ActiveRecord
         $this->status = Apple::STATUS_DROPPED;
         $this->fall_at = time();
 
-        if (!$this->save()) {
-            throw new \Exception('Error when an apple falls');
-        }
+        $this->save();
     }
 
     public function eat(int $percent): void
@@ -119,8 +117,15 @@ class Apple extends ActiveRecord
 
         $this->size = $this->size - 1 / 100 * $percent;
 
-        if (!$this->save()) {
-            throw new \Exception('Error when trying to take a bite of an apple');
+        if ($this->size < 0) {
+            throw new \Exception('Trying to bite off more than exists');
         }
+
+        if ($this->size === 0.0) {
+            $this->delete();
+            return;
+        }
+
+        $this->save();
     }
 }
