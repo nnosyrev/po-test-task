@@ -73,8 +73,7 @@ class AppleController extends Controller
         for ($i = 0; $i < $count; $i++) {
             $apple = new Apple();
             $apple->color = 'red';
-            $apple->size = mt_rand(3, 10);
-            $apple->percent = 0;
+            $apple->size = '1.00';
             $apple->status = Apple::STATUS_HANGING;
 
             $apple->save();
@@ -95,6 +94,7 @@ class AppleController extends Controller
 
         $apple = Apple::findOneOrFail($id);
         $apple->status = Apple::STATUS_FALLEN;
+        $apple->fall_at = time();
 
         if ($apple->save()) {
             return $this->redirect(['apple/list']);

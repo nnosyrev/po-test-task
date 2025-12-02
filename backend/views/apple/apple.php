@@ -9,7 +9,6 @@ use yii\widgets\ActiveForm;
    <?= $model->id ?>
    <?= Html::encode($model->color) ?>
    <?= Html::encode($model->size) ?>
-   <?= Html::encode($model->percent) ?>
    <?= Html::encode($model->status) ?>
 
    <?php $form = ActiveForm::begin([
@@ -28,7 +27,6 @@ use yii\widgets\ActiveForm;
        //'options' => ['class' => 'form-horizontal'],
    ]) ?>
        <?= $form->field($model, 'id')->hiddenInput()->label(false) ?>
-       <?= $form->field($model, 'percent') ?>
 
        <?= Html::submitButton('Откусить процент') ?>
    <?php ActiveForm::end() ?>
