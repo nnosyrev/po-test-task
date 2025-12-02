@@ -89,10 +89,8 @@ class AppleController extends Controller
      *
      * @return string
      */
-    public function actionDrop()
+    public function actionDrop(int $id)
     {
-        $id = Yii::$app->request->post('Apple')['id'];
-
         $apple = Apple::findOneOrFail($id);
         $apple->status = Apple::STATUS_DROPPED;
         $apple->fall_at = time();

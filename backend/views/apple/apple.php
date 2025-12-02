@@ -13,9 +13,8 @@ use yii\widgets\ActiveForm;
 
    <?php $form = ActiveForm::begin([
        'id' => 'fall-form',
-       'action' => Url::to(['apple/drop']),
+       'action' => Url::to(['apple/drop', 'id' => $model->id]),
    ]) ?>
-       <?= $form->field($model, 'id')->hiddenInput()->label(false) ?>
 
        <?= Html::submitButton('Сбросить') ?>
    <?php ActiveForm::end() ?>
