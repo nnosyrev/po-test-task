@@ -1,3 +1,5 @@
+### Setting Up the Environment
+
 Install the application dependencies
 
     docker-compose run --rm backend composer install
