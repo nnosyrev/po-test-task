@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\LoginForm;
+use common\models\LoginOnlyByPasswordForm;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -79,15 +80,15 @@ class SiteController extends Controller
 
         $this->layout = 'blank';
 
-        $model = new LoginForm();
+
+        $model = new LoginOnlyByPasswordForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            //return $this->goBack();
             return $this->response->redirect(Url::to(['apple/list']));
         }
 
         $model->password = '';
 
-        return $this->render('login', [
+        return $this->render('login_only_by_password', [
             'model' => $model,
         ]);
     }
