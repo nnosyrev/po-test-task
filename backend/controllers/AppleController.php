@@ -8,6 +8,7 @@ use common\exceptions\RottenAppleException;
 use Yii;
 use yii\data\ArrayDataProvider;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\validators\RangeValidator;
 use yii\web\Controller;
 use yii\web\Response;
@@ -31,6 +32,14 @@ class AppleController extends Controller
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'create' => ['post'],
+                    'drop' => ['post'],
+                    'eat' => ['post'],
                 ],
             ],
         ];

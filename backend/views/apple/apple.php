@@ -11,7 +11,7 @@ $current = 25;
 
 $percents = [];
 while ($current <= $size) {
-    $percents[$current] = $current;
+    $percents[$current] = $current . '%';
     $current += 25;
 }
 
