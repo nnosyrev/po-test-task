@@ -13,7 +13,7 @@ class DeleteRottenApplesController extends Controller
         $oldRottenApples = Apple::findAllOldRotten();
 
         foreach ($oldRottenApples as $oldRottenApple) {
-            $this->stdout("Removing an old rotten apple #" . $oldRottenApple->id . ".\n");
+            $this->stdout("Removing an old rotten apple #" . $oldRottenApple->id . "...\n");
             $oldRottenApple->delete();
         }
 

@@ -104,7 +104,7 @@ class AppleController extends Controller
         try {
             $apple->eat(Yii::$app->request->post('percent'));
         } catch (RottenAppleException $e) {
-            Yii::$app->session->setFlash('error', "The apple is rotten. You can't eat it.");
+            Yii::$app->session->setFlash('error', "The apple #" . $id . " is rotten. You can't eat it.");
         }
 
         return $this->redirect(['apple/list']);
