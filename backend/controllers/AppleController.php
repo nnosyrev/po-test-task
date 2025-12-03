@@ -8,6 +8,7 @@ use common\exceptions\RottenAppleException;
 use Yii;
 use yii\data\ArrayDataProvider;
 use yii\filters\AccessControl;
+use yii\validators\RangeValidator;
 use yii\web\Controller;
 use yii\web\Response;
 
@@ -101,10 +102,16 @@ class AppleController extends Controller
     {
         $apple = Apple::findOneOrFail($id);
 
-        try {
-            $apple->eat(Yii::$app->request->post('percent'));
-        } catch (RottenAppleException $e) {
-            Yii::$app->session->setFlash('error', "The apple #" . $id . " is rotten. You can't eat it.");
+        $percent = Yii::$app->request->post('percent');
+
+        $validator = new RangeValidator(['range' => [25, 50, 75, 100]]);
+
+        if ($validator->validate($percent, $error)) {
+            try {
+                $apple->eat($percent);
+            } catch (RottenAppleException $e) {
+                Yii::$app->session->setFlash('error', "The apple #" . $id . " is rotten. You can't eat it.");
+            }
         }
 
         return $this->redirect(['apple/list']);
