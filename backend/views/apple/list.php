@@ -2,6 +2,9 @@
 
 /** @var yii\web\View $this */
 
+use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\widgets\ActiveForm;
 use yii\widgets\ListView;
 
 $this->title = 'My Yii Application';
@@ -13,6 +16,16 @@ $this->title = 'My Yii Application';
         <p class="lead">Apples:</p>
 
     </div>
+
+    <?php $form = ActiveForm::begin([
+        'id' => 'create-form',
+        'action' => Url::to(['apple/create']),
+    ]) ?>
+        <?= Html::submitButton('Create new apples') ?>
+    <?php ActiveForm::end() ?>
+
+    <br>
+    <br>
     <br>
     
     <?= ListView::widget([
