@@ -11,4 +11,6 @@ return [
     'appleRotsInSeconds' => 3600 * 5,
     'appleAppearancePeriod' => 3600 * 5,
     'deleteRottenOlderThan' => 3600 * 24,
+    'createApplesFrom' => 5,
+    'createApplesTo' => 10,
 ];

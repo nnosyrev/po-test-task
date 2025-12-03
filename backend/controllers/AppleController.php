@@ -79,7 +79,7 @@ class AppleController extends Controller
      */
     public function actionCreate()
     {
-        $count = mt_rand(5, 10);
+        $count = mt_rand(Yii::$app->params['createApplesFrom'], Yii::$app->params['createApplesTo']);
 
         for ($i = 0; $i < $count; $i++) {
             Apple::create(AppleColor::random());
