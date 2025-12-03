@@ -8,6 +8,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\BatchQueryResult;
 use yii\web\NotFoundHttpException;
+use yii\web\UnprocessableEntityHttpException;
 
 /**
  * Apple model
@@ -112,7 +113,7 @@ class Apple extends ActiveRecord
     public function drop(): void
     {
         if ($this->status === Apple::STATUS_DROPPED) {
-            throw new \Exception('The apple is already on the ground');
+            throw new UnprocessableEntityHttpException('The apple is already on the ground');
         }
 
         $this->status = Apple::STATUS_DROPPED;
@@ -124,7 +125,7 @@ class Apple extends ActiveRecord
     public function eat(int $percent): void
     {
         if ($this->status === Apple::STATUS_HANGING) {
-            throw new \Exception('Trying to eat a hanging apple');
+            throw new UnprocessableEntityHttpException('Trying to eat a hanging apple');
         }
 
         if ($this->isRotten()) {
@@ -134,7 +135,7 @@ class Apple extends ActiveRecord
         $this->size = $this->size - 1 / 100 * $percent;
 
         if ($this->size < 0) {
-            throw new \Exception('Trying to bite off more than exists');
+            throw new UnprocessableEntityHttpException('Trying to bite off more than exists');
         }
 
         if ($this->size === 0.0) {
