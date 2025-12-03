@@ -44,8 +44,6 @@ while ($current <= $size) {
             'action' => Url::to(['apple/eat', 'id' => $model->id]),
             //'options' => ['class' => 'form-horizontal'],
         ]) ?>
-            <?= $form->field($model, 'id')->hiddenInput()->label(false) ?>
-
             <?= Html::dropDownList('percent', null, $percents) ?>
 
             <?= Html::submitButton('Eat percent') ?>
