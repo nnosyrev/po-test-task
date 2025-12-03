@@ -19,9 +19,9 @@ while ($current <= $size) {
 
 <div class="user">
     Apple #<?= $model->id ?>
-    <?= Html::encode($model->color->value) ?>
-    <?= Html::encode($model->size) ?>
-    <?= Html::encode($model->status) ?>
+    Color: <?= Html::encode($model->color->value) ?>;
+    Size: <?= Html::encode($model->size) * 100 ?>%;
+    Status: <?= Html::encode($model->status) ?>;
 
     <?php if ($model->status === Apple::STATUS_HANGING): ?>
 
