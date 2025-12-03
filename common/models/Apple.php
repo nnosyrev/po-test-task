@@ -6,6 +6,7 @@ use common\enums\AppleColor;
 use common\exceptions\RottenAppleException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\db\BatchQueryResult;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -98,6 +99,14 @@ class Apple extends ActiveRecord
             ->where('fall_at IS NULL')
             ->orWhere('fall_at >= :threshold', ['threshold' => time() - \Yii::$app->params['appleRotsInSeconds']])
             ->all();
+    }
+
+    public static function findAllOldRotten(): BatchQueryResult
+    {
+        return Apple::find()
+            ->where('fall_at IS NOT NULL')
+            ->andWhere('fall_at < :threshold', ['threshold' => time() - \Yii::$app->params['appleRotsInSeconds'] - \Yii::$app->params['deleteRottenOlderThan']])
+            ->each();
     }
 
     public function drop(): void
