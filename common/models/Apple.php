@@ -55,9 +55,12 @@ class Apple extends ActiveRecord
     public function rules()
     {
         return [
+            [['color', 'size', 'status', 'appearance_at'], 'required'],
+            ['color', 'in', 'range' => AppleColor::cases()],
+            [['size'], 'number'],
             ['status', 'default', 'value' => self::STATUS_HANGING],
             ['status', 'in', 'range' => [self::STATUS_HANGING, self::STATUS_DROPPED]],
-            ['color', 'in', 'range' => AppleColor::cases()],
+            [['appearance_at', 'fall_at'], 'integer'],
         ];
     }
 
