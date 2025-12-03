@@ -30,7 +30,7 @@ while ($current <= $size) {
             'action' => Url::to(['apple/drop', 'id' => $model->id]),
         ]) ?>
 
-            <?= Html::submitButton('Сбросить') ?>
+            <?= Html::submitButton('Drop') ?>
         <?php ActiveForm::end() ?>
 
         <br>
@@ -48,7 +48,7 @@ while ($current <= $size) {
 
             <?= Html::dropDownList('percent', null, $percents) ?>
 
-            <?= Html::submitButton('Съесть процент') ?>
+            <?= Html::submitButton('Eat percent') ?>
         <?php ActiveForm::end() ?>
 
     <?php endif; ?>

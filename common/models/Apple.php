@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\enums\AppleColor;
+use common\exceptions\RottenAppleException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\NotFoundHttpException;
@@ -118,7 +119,7 @@ class Apple extends ActiveRecord
         }
 
         if ($this->isRotten()) {
-            throw new \Exception('The apple is rotten');
+            throw new RottenAppleException('The apple is rotten');
         }
 
         $this->size = $this->size - 1 / 100 * $percent;

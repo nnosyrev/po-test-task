@@ -10,7 +10,7 @@ $this->title = 'My Yii Application';
     <div class="jumbotron text-center bg-transparent">
         <h1 class="display-4">Congratulations!</h1>
 
-        <p class="lead">Тут будет список яблок...</p>
+        <p class="lead">Apples:</p>
 
     </div>
     <br>

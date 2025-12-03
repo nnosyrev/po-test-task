@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\enums\AppleColor;
 use common\models\Apple;
+use common\exceptions\RottenAppleException;
 use Yii;
 use yii\data\ArrayDataProvider;
 use yii\filters\AccessControl;
@@ -100,9 +101,11 @@ class AppleController extends Controller
     {
         $apple = Apple::findOneOrFail($id);
 
-        $apple->eat(Yii::$app->request->post('percent'));
-
-        //Yii::$app->session->setFlash('error', "Data2 failed!");
+        try {
+            $apple->eat(Yii::$app->request->post('percent'));
+        } catch (RottenAppleException $e) {
+            Yii::$app->session->setFlash('error', "The apple is rotten. You can't eat it.");
+        }
 
         return $this->redirect(['apple/list']);
     }
