@@ -27,8 +27,8 @@ class SpecialUser implements IdentityInterface
         $specialUser = new self();
         $specialUser->username = 'Special user';
         $specialUser->status = User::STATUS_ACTIVE;
-        $specialUser->auth_key = 'auth_key';
-        $specialUser->setPassword(\Yii::$app->params['loginPassword']);
+        $specialUser->auth_key = Yii::$app->params['authKey'];
+        $specialUser->setPassword(Yii::$app->params['loginPassword']);
 
         return $specialUser;
     }
