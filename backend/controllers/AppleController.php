@@ -118,6 +118,7 @@ class AppleController extends Controller
         if ($validator->validate($percent, $error)) {
             try {
                 $apple->eat($percent);
+                $apple->deleteIfEaten();
             } catch (RottenAppleException $e) {
                 Yii::$app->session->setFlash('error', "The apple #" . $id . " is rotten. You can't eat it.");
             }

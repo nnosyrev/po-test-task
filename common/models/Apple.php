@@ -141,12 +141,14 @@ class Apple extends ActiveRecord
             throw new UnprocessableEntityHttpException('Trying to bite off more than exists');
         }
 
+        $this->save();
+    }
+
+    public function deleteIfEaten(): void
+    {
         if ($this->size === 0.0) {
             $this->delete();
-            return;
         }
-
-        $this->save();
     }
 
     public function isRotten(): bool
